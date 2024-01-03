@@ -2,14 +2,14 @@
 
 """ Arduino PC Interface for Data Logging"""
 
-from serial import Serial
 import json
+from serial import Serial
 from time import perf_counter, sleep
 
 
 class SerialInterface:
-    def __init__(self, port="COM5", baud=115200, timeout=1):
-        self.ser = Serial(port, baudrate=baud, timeout=timeout)
+    def __init__(self, port="COM5", baud=9600):
+        self.ser = Serial(port, baudrate=baud)
         self.no_response = False
         self.r = 0
         sleep(5)
@@ -45,11 +45,11 @@ class SerialInterface:
 
 
 if __name__ == "__main__":
-    start = perf_counter()
     iface = SerialInterface()
-    msg = {"msg": "ping"}
-
+    msg = {"msg": "REQ"}
     n = 10000
+
+    start = perf_counter()
 
     while iface.r < n:
         # Check if response was received
@@ -57,6 +57,7 @@ if __name__ == "__main__":
         iface.read_msg()
 
     end = perf_counter()
+
     execution_time = end - start
     time_per_msg = execution_time / n
     print("\n")
