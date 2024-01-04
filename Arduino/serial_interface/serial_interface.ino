@@ -1,7 +1,7 @@
 #include <ArduinoJson.h>
 
-StaticJsonDocument<100> outgoing; // JSON Document to hold data to be sent
-StaticJsonDocument<900> incoming; // JSON Document to hold data being received
+StaticJsonDocument<500> outgoing; // JSON Document to hold data to be sent
+StaticJsonDocument<500> incoming; // JSON Document to hold data being received
 
 void setup() {
   Serial.begin(115200);
