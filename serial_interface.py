@@ -4,11 +4,11 @@
 
 import json
 from serial import Serial
-from time import perf_counter, sleep
+from time import sleep
 
 
 class SerialInterface:
-    def __init__(self, port="COM5", baud=9600):
+    def __init__(self, port="COM1", baud=9600):
         self.ser = Serial(port, baudrate=baud)
         self.no_response = False
         self.r = 0
@@ -45,21 +45,9 @@ class SerialInterface:
 
 
 if __name__ == "__main__":
+    # Example usage
     iface = SerialInterface()
-    msg = {"msg": "REQ"}
-    n = 10000
+    msg = {"msg": "REQ"}  # Define the message
+    iface.write_msg(msg)  # Send it
+    iface.read_msg()  # Read the response
 
-    start = perf_counter()
-
-    while iface.r < n:
-        # Check if response was received
-        iface.write_msg(msg)
-        iface.read_msg()
-
-    end = perf_counter()
-
-    execution_time = end - start
-    time_per_msg = execution_time / n
-    print("\n")
-    print(f"Received {iface.r} messages in {execution_time} s")
-    print(f"{time_per_msg} s per round trip")
